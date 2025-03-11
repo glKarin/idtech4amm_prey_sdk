@@ -29,7 +29,7 @@ endif()
 add_definitions(-D_K_CLANG) # TODO
 add_definitions(-DID_ENABLE_CURL=${COMPILE_CURL})
 
-set(CMAKE_VERBOSE_MAKEFILE ON)
+#set(CMAKE_VERBOSE_MAKEFILE ON)
 
 # set(CMAKE_BUILD_TYPE "Debug")
 # TODO
@@ -96,8 +96,9 @@ option(SHADOW_MAPPING						"Shadow mapping support" 													ON)
 option(NO_LIGHT								"r_noLight support" 														ON)
 option(STENCIL_SHADOW_IMPROVE				"Improve stencil shadow(translucent, soft(Only OpenGLES3.1+))" 				ON)
 option(EXTRAS_TOOLS							"Add extras commands" 														OFF)
-option(USE_MINIZ							"use miniz and minizip" 													OFF)
-option(USE_STB_OGG							"use stb_vorbis" 															OFF)
+option(MODEL_VIEWER							"Add model viewer in engine" 												OFF)
+option(USE_MINIZ							"use miniz and minizip" 													ON)
+option(USE_STB_OGG							"use stb_vorbis" 															ON)
 
 # Prey 2006
 option(PREY									"Build the prey game code" 													ON)
@@ -246,8 +247,12 @@ if(CMAKE_MAJOR_VERSION LESS 3 OR ( CMAKE_MAJOR_VERSION EQUAL 3 AND CMAKE_MINOR_V
 endif()
 
 # libs
+if(USE_MINIZ)
+	add_definitions(-D_MINIZ)
+else()
 find_package(ZLIB REQUIRED)
 include_directories(${ZLIB_INCLUDE_DIRS})
+endif()
 
 # OpenAL using internal OpenAL-soft
 #[[find_package(OpenAL REQUIRED)
